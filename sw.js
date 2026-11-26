@@ -1,6 +1,6 @@
 // Bolso: guarda os arquivos do app para funcionar sem internet.
 // Ao publicar uma versão nova, troque o número abaixo (v1 -> v2).
-const CACHE = 'bolso-v1';
+const CACHE = 'bolso-v2';
 const FONTES = 'bolso-fontes';
 const ARQUIVOS = [
   './', './index.html', './manifest.webmanifest', './lib/xlsx.mini.min.js',

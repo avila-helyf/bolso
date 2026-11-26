@@ -9,6 +9,7 @@
 <link rel="icon" type="image/png" href="icons/icon-192.png">
 <link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
 <meta name="mobile-web-app-capable" content="yes">
+<script>try{if(localStorage.getItem('bolso-tema')==='claro'){document.documentElement.dataset.tema='claro';document.querySelector('meta[name=theme-color]').content='#f2f5f9'}}catch(e){}</script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
@@ -18,8 +19,9 @@
    PICTURE: a strip of bill stubs, one per conta, filling sky-blue as each is paid, under the big "falta pagar"
    COLOUR and TYPE: deep sea #0a2540 ground, sky #8fd3ff for paid, white ink, signal pink #ff5c8a for late; Hanken Grotesk 300 big figure + Hanken Grotesk
    LAYOUT: one 560px column: month switcher, summary, filter chips, list; bottom sheet to edit; floating "Nova conta" */
-:root{color-scheme:dark;--bg:#0a2540;--card:#10304f;--card2:#163c61;--line:rgba(143,211,255,.18);--ink:#fff;--mute:#a9bfd4;--sky:#8fd3ff;--pink:#ff5c8a;--deep:#06182b}
+:root{color-scheme:dark;--bg:#0a2540;--card:#10304f;--card2:#163c61;--line:rgba(143,211,255,.18);--ink:#fff;--mute:#a9bfd4;--sky:#8fd3ff;--pink:#ff5c8a;--deep:#06182b;--soft:rgba(255,255,255,.24);--soft2:rgba(255,255,255,.06);--entl:rgba(255,255,255,.7);--tbtn:#0b5c8f;--sombra:none}
 :root[data-theme=light],:root[data-theme=dark]{color-scheme:dark}
+:root[data-tema=claro]{color-scheme:light;--bg:#f2f5f9;--card:#fff;--card2:#e7f0f9;--line:rgba(10,37,64,.14);--ink:#0a2540;--mute:#56697e;--sky:#1d78c1;--pink:#d1336a;--deep:#fff;--soft:rgba(10,37,64,.16);--soft2:rgba(10,37,64,.06);--entl:rgba(10,37,64,.6);--tbtn:#8fd3ff;--sombra:0 1px 3px rgba(10,37,64,.08)}
 *{box-sizing:border-box;min-width:0}
 [hidden]{display:none!important}
 body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.5 "Hanken Grotesk",system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;overflow-x:clip;-webkit-tap-highlight-color:transparent}
@@ -78,7 +80,7 @@ h2.sec{margin:22px 4px 8px;font-size:15px;font-weight:600;color:var(--mute)}
 .toast{position:fixed;left:50%;bottom:88px;transform:translateX(-50%);width:min(528px,calc(100% - 32px));background:var(--ink);color:var(--bg);border-radius:14px;padding:8px 8px 8px 16px;display:flex;align-items:center;gap:4px 6px;flex-wrap:wrap;box-shadow:0 10px 30px rgba(0,0,0,.4);z-index:50}
 .toast p{margin:0;flex:1 1 150px;font-weight:600}
 .toast span{display:flex;flex-wrap:wrap}
-.toast button{min-height:40px;padding:0 10px;font-weight:700;color:#0b5c8f;border-radius:8px}
+.toast button{min-height:40px;padding:0 10px;font-weight:700;color:var(--tbtn);border-radius:8px}
 .wrap{position:fixed;inset:0;z-index:30;display:flex;align-items:flex-end;justify-content:center}
 .scrim{position:absolute;inset:0;background:rgba(3,12,24,.66)}
 .sheet{position:relative;width:min(560px,100%);max-height:92dvh;overflow:auto;background:var(--card);border-radius:20px 20px 0 0;padding:0 18px 24px;animation:up .22s ease-out}
@@ -120,9 +122,9 @@ h2.sec{margin:22px 4px 8px;font-size:15px;font-weight:600;color:var(--mute)}
 .viewer img{max-width:100%;max-height:calc(100dvh - 80px);border-radius:8px}
 .viewer .ib{position:absolute;top:8px;right:8px;color:#fff}
 .big.neg{color:var(--pink)}
-.money{display:flex;gap:2px;height:14px;border-radius:7px;overflow:hidden;margin:18px 0 12px;background:rgba(255,255,255,.06)}
+.money{display:flex;gap:2px;height:14px;border-radius:7px;overflow:hidden;margin:18px 0 12px;background:var(--soft2)}
 .money i{display:block;height:100%;transition:width .6s}
-.money .p{background:var(--sky)}.money .a{background:var(--pink)}.money .s{background:rgba(255,255,255,.24)}
+.money .p{background:var(--sky)}.money .a{background:var(--pink)}.money .s{background:var(--soft)}
 .meta3{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}
 .meta3>*{font-size:13px;color:var(--mute);text-align:left;line-height:1.3}
 .meta3 b{display:block;color:var(--ink);font-size:16px;font-weight:600;white-space:nowrap;margin-top:2px}
@@ -130,7 +132,7 @@ h2.sec{margin:22px 4px 8px;font-size:15px;font-weight:600;color:var(--mute)}
 .meta3 button b{color:var(--sky)}
 .dot{display:inline-block;width:8px;height:8px;border-radius:2px;margin-right:5px}
 .entlink{margin-top:8px;min-height:40px;color:var(--sky);font-weight:600;font-size:15px;padding:0}
-.tabs{display:grid;grid-template-columns:1fr 1fr 1fr;gap:4px;background:var(--card);border-radius:12px;padding:4px;margin:0 0 8px}
+.tabs{display:grid;grid-template-columns:1fr 1fr 1fr auto;gap:4px;background:var(--card);border-radius:12px;padding:4px;margin:0 0 8px}
 .tabs button{min-height:40px;border-radius:9px;font-weight:600;font-size:15px;color:var(--mute)}
 .tabs button[aria-pressed=true]{background:var(--sky);color:var(--deep)}
 .anoT{margin:10px 4px 0;font-size:21px;font-weight:600}
@@ -145,7 +147,7 @@ h2.sec{margin:22px 4px 8px;font-size:15px;font-weight:600;color:var(--mute)}
 .ccol .b.over{background:var(--pink)}
 .ccol .b.prev{background:transparent;border:1.5px dashed var(--sky);border-bottom:0}
 .ccol .b.prev.over{border-color:var(--pink)}
-.ccol .e{position:absolute;left:6%;right:6%;border-top:2px dashed rgba(255,255,255,.7)}
+.ccol .e{position:absolute;left:6%;right:6%;border-top:2px dashed var(--entl)}
 .ccol[aria-pressed=true]{background:rgba(143,211,255,.12)}
 .clbl{display:flex;gap:3px;margin-top:6px}
 .clbl span{flex:1;text-align:center;font-size:12px;color:var(--mute);overflow:hidden}
@@ -186,6 +188,23 @@ h2.sec{margin:22px 4px 8px;font-size:15px;font-weight:600;color:var(--mute)}
 .imp .acts2{display:flex;gap:10px;margin-top:12px;flex-wrap:wrap}
 .imp .acts2 .pri{margin:0;flex:1 1 160px}
 .imp .acts2 .pri.danger{background:var(--pink)}
+.item,.tile,.detA,.bkcard,.tabs{box-shadow:var(--sombra)}
+.tabs .tema{width:44px;min-height:40px;display:grid;place-items:center;color:var(--sky);border-radius:9px}
+.tabs .tema svg{width:22px;height:22px}
+.seltool{display:flex;align-items:center;justify-content:space-between;gap:8px;margin-top:8px;min-height:44px}
+.seltool button{min-height:44px;padding:0 4px;color:var(--sky);font-weight:600;font-size:15px}
+.seltool .cnt{font-weight:700;font-size:15px}
+.item.selm .pk{flex:none;width:50px;height:50px;display:grid;place-items:center}
+.item.selm .pk i{width:26px;height:26px;border-radius:7px;border:2px solid var(--mute);display:grid;place-items:center;color:transparent}
+.item.selm .pk svg{width:18px;height:18px}
+.item.picked{outline:2px solid var(--sky);outline-offset:-2px}
+.item.picked .pk i{background:var(--sky);border-color:var(--sky);color:var(--deep)}
+.selbar{position:fixed;left:50%;transform:translateX(-50%);bottom:16px;width:min(528px,calc(100% - 32px));background:var(--card2);border:1px solid var(--line);border-radius:18px;padding:10px;display:flex;gap:8px;flex-wrap:wrap;align-items:center;box-shadow:0 10px 30px rgba(0,0,0,.3);z-index:6}
+.selbar p{margin:2px 4px 4px;flex:1 1 100%;font-size:15px;font-weight:600}
+.selbar button{flex:1 1 0;min-height:50px;border-radius:12px;font-weight:700;font-size:15px;padding:0 8px}
+.selbar .ok{background:var(--sky);color:var(--deep)}
+.selbar .del{background:var(--pink);color:var(--deep)}
+.selbar .neutro{border:1px solid var(--line)}
 .erow{display:grid;grid-template-columns:minmax(0,1fr) 120px 44px;gap:8px;align-items:center;margin-top:10px}
 .erow input{width:100%;height:48px;border-radius:12px;border:1px solid var(--line);background:var(--bg);padding:0 12px;font-size:16px}
 .erow input:focus{outline:2px solid var(--sky);outline-offset:0;border-color:transparent}
@@ -193,7 +212,7 @@ h2.sec{margin:22px 4px 8px;font-size:15px;font-weight:600;color:var(--mute)}
 </head>
 <body>
 <div class="app">
-  <nav class="tabs" aria-label="Visão"><button type="button" data-view="mes" aria-pressed="true">Mês</button><button type="button" data-view="ano" aria-pressed="false">Ano</button><button type="button" data-view="bkp" aria-pressed="false">Backup</button></nav>
+  <nav class="tabs" aria-label="Visão"><button type="button" data-view="mes" aria-pressed="true">Mês</button><button type="button" data-view="ano" aria-pressed="false">Ano</button><button type="button" data-view="bkp" aria-pressed="false">Backup</button><button type="button" class="tema" id="temaBtn" aria-label="Mudar para modo claro"></button></nav>
   <div id="mesView">
   <header>
     <div class="mes">
@@ -220,6 +239,7 @@ h2.sec{margin:22px 4px 8px;font-size:15px;font-weight:600;color:var(--mute)}
     <button type="button" class="entlink" id="entLink" data-ent hidden>+ Informar quanto entrou no mês</button>
   </section>
   <nav class="chips" id="chips" aria-label="Filtrar contas"></nav>
+  <div class="seltool" id="selTool"></div>
   <main id="lista"><p class="empty">Carregando suas contas…</p></main>
   </div>
   <section id="anoView" hidden>
@@ -240,7 +260,7 @@ h2.sec{margin:22px 4px 8px;font-size:15px;font-weight:600;color:var(--mute)}
     </div>
     <div class="chartA" id="chartA" aria-label="Contas por mês"></div>
     <div class="clbl" id="clbl" aria-hidden="true"></div>
-    <div class="leg"><span><i style="background:var(--sky)"></i>Contas</span><span><i style="background:var(--pink)"></i>Passou do que entrou</span><span><i style="border:1.5px dashed var(--sky)"></i>Previsto</span><span><i style="border-top:2px dashed #fff;height:0;width:14px"></i>Entrou</span></div>
+    <div class="leg"><span><i style="background:var(--sky)"></i>Contas</span><span><i style="background:var(--pink)"></i>Passou do que entrou</span><span><i style="border:1.5px dashed var(--sky)"></i>Previsto</span><span><i style="border-top:2px dashed var(--entl);height:0;width:14px"></i>Entrou</span></div>
     <div class="detA" id="detA"></div>
     <p class="h" id="anoNota" style="margin-top:10px"></p>
     <h2 class="sec">Planilha do período</h2>
@@ -269,6 +289,8 @@ h2.sec{margin:22px 4px 8px;font-size:15px;font-weight:600;color:var(--mute)}
 </div>
 
 <button class="fab" id="nova"><svg viewBox="0 0 24 24"><path d="M12 5v14M5 12h14" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/></svg>Nova conta</button>
+
+<div class="selbar" id="selBar" hidden></div>
 
 <div class="toast" id="toast" role="status" hidden><p id="toastMsg"></p><span id="toastActs"></span></div>
 
@@ -341,7 +363,7 @@ const clean=o=>JSON.parse(JSON.stringify(o));
 const icCheck='<svg viewBox="0 0 24 24"><path d="M5 12.5l4.2 4.2L19 7" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round"/></svg>';
 const icClip='<svg viewBox="0 0 24 24" role="img" aria-label="com comprovante"><path d="M20 11.5l-8.2 8.2a5.2 5.2 0 01-7.4-7.4l8.4-8.4a3.5 3.5 0 015 5l-8.3 8.3a1.8 1.8 0 01-2.6-2.6l7.6-7.6" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>';
 
-const S={contas:{},pags:{},meses:{},M:CUR,filtro:'todas',loaded:false,ok:false,err:false,view:'mes',per:'ano',de:null,ate:null,selA:null};
+const S={contas:{},pags:{},meses:{},M:CUR,filtro:'todas',loaded:false,ok:false,err:false,view:'mes',per:'ano',de:null,ate:null,selA:null,sel:null,selConf:false};
 let dlNS=null,SH=null,onPick=null,tt=null,meta={},IMP=null;
 let local={contas:{},pags:{},meses:{}};
 
@@ -385,7 +407,9 @@ function row(i){
   if(c.nota)bits.push(esc(c.nota));
   if(i.comp)bits.push(icClip);
   const v=i.valor==null?'<span class="val none">sem valor</span>':`<span class="val">${esc(BRL.format(i.valor))}</span>`;
-  return `<div class="item${i.pago?' ok':''}${i.late?' late':''}"><button class="chk" data-t="${esc(c.id)}" aria-pressed="${i.pago}" aria-label="${i.pago?'Desmarcar':'Marcar'} ${esc(c.nome)} como paga"><i>${icCheck}</i></button><button class="body" data-o="${esc(c.id)}"><span class="nm">${esc(c.nome)}</span>${v}<span class="sub">${bits.join('<span aria-hidden="true">·</span>')}</span></button></div>`;
+  const corpo=`<span class="nm">${esc(c.nome)}</span>${v}<span class="sub">${bits.join('<span aria-hidden="true">·</span>')}</span>`;
+  if(S.sel){const on=S.sel.has(c.id);return `<div class="item selm${on?' picked':''}${i.pago?' ok':''}"><button class="pk" data-s="${esc(c.id)}" aria-pressed="${on}" aria-label="Selecionar ${esc(c.nome)}"><i>${icCheck}</i></button><button class="body" data-s="${esc(c.id)}">${corpo}</button></div>`}
+  return `<div class="item${i.pago?' ok':''}${i.late?' late':''}"><button class="chk" data-t="${esc(c.id)}" aria-pressed="${i.pago}" aria-label="${i.pago?'Desmarcar':'Marcar'} ${esc(c.nome)} como paga"><i>${icCheck}</i></button><button class="body" data-o="${esc(c.id)}">${corpo}</button></div>`;
 }
 
 function renderMes(){
@@ -418,6 +442,11 @@ function renderMes(){
   const chips=[['todas','Todas',all.length],['pend','A pagar',pend.length],['pagas','Pagas',pagas.length]];
   if(sem.length)chips.push(['sem','Sem valor',sem.length]);
   $('#chips').innerHTML=chips.map(([k,t,n])=>`<button class="chip${k==='sem'?' warn':''}" data-f="${k}" aria-pressed="${S.filtro===k}">${t}<span>${n}</span></button>`).join('');
+  if(S.sel){const ids=new Set(all.map(i=>i.c.id));S.sel=new Set([...S.sel].filter(id=>ids.has(id)))}
+  const vis=S.filtro==='pend'?pend:S.filtro==='pagas'?pagas:S.filtro==='sem'?sem:all,tool=$('#selTool');
+  if(!all.length){tool.innerHTML='';S.sel=null}
+  else if(!S.sel)tool.innerHTML='<span></span><button type="button" data-selon>Selecionar</button>';
+  else{const n=S.sel.size,tudo=vis.length>0&&vis.every(i=>S.sel.has(i.c.id));tool.innerHTML=`<span class="cnt">${n===1?'1 selecionada':n+' selecionadas'}</span><span><button type="button" data-selall>${tudo?'Limpar':'Selecionar todas'}</button><button type="button" data-seloff style="margin-left:14px">Cancelar</button></span>`}
   let h='';
   if(!all.length)h=`<div class="empty"><b>Nenhuma conta em ${esc(nomeMes(M))}</b>Toque em “Nova conta” para começar.</div>`;
   else if(S.filtro==='todas'){
@@ -430,7 +459,7 @@ function renderMes(){
   $('#lista').innerHTML=h;
 }
 
-const render=()=>{renderMes();renderBkBar();if(S.view==='ano')renderAno();if(S.view==='bkp')renderBkp()};
+const render=()=>{renderMes();renderSelBar();renderBkBar();if(S.view==='ano')renderAno();if(S.view==='bkp')renderBkp()};
 
 /* ---------- armazenamento ---------- */
 /* guardado no próprio aparelho (IndexedDB) */
@@ -671,7 +700,7 @@ function scrollSel(){
   w.scrollLeft=Math.max(0,th.offsetLeft-first.offsetWidth-th.offsetWidth*1.5);
 }
 function setView(v){
-  S.view=v;document.querySelectorAll('[data-view]').forEach(b=>b.setAttribute('aria-pressed',String(b.dataset.view===v)));
+  sairSel();S.view=v;document.querySelectorAll('[data-view]').forEach(b=>b.setAttribute('aria-pressed',String(b.dataset.view===v)));
   $('#mesView').hidden=v!=='mes';$('#anoView').hidden=v!=='ano';$('#bkpView').hidden=v!=='bkp';$('#nova').hidden=v!=='mes';$('#toast').hidden=true;
   render();if(v==='ano')scrollSel();window.scrollTo({top:0});
 }
@@ -723,6 +752,44 @@ $('#dlBtn').addEventListener('click',async()=>{
     msg.textContent=c==='declined'?'Download cancelado.':c==='host_unavailable'?'Este app não consegue salvar arquivos aqui. Abra o link no Chrome para baixar.':c==='rate_limited'?'Espere um instante e tente de novo.':'Não consegui gerar a planilha agora. Tente de novo.';
   }finally{btn.disabled=false;lb.textContent='Baixar planilha (Excel)'}
 });
+
+/* ---------- seleção de várias contas ---------- */
+const visiveis=()=>{const a=itens(S.M);return S.filtro==='pend'?a.filter(i=>!i.pago):S.filtro==='pagas'?a.filter(i=>i.pago):S.filtro==='sem'?a.filter(i=>i.valor==null):a};
+function sairSel(){S.sel=null;S.selConf=false}
+function renderSelBar(){
+  const bar=$('#selBar'),on=!!S.sel&&S.view==='mes'&&S.loaded;
+  bar.hidden=!on;$('#nova').hidden=on||S.view!=='mes';if(!on)return;
+  const its=itens(S.M).filter(i=>S.sel.has(i.c.id)),n=its.length,todasPagas=n>0&&its.every(i=>i.pago);
+  if(S.selConf&&n){bar.innerHTML=`<p>Excluir ${n===1?'1 conta':n+' contas'} de todos os meses?</p><button type="button" class="neutro" data-selvoltar>Voltar</button><button type="button" class="del" data-seldelok>Excluir</button>`;return}
+  S.selConf=false;
+  bar.innerHTML=`<button type="button" class="ok" data-selpag>${todasPagas?'Voltar para a pagar':'Marcar como pagas'}</button><button type="button" class="del" data-seldel>Excluir${n?' ('+n+')':''}</button>`;
+}
+async function selPagar(){
+  const M=S.M,its=itens(M).filter(i=>S.sel&&S.sel.has(i.c.id));if(!its.length){toast('Toque nas contas para selecionar.');return}
+  const voltar=its.every(i=>i.pago),alvo=voltar?its:its.filter(i=>!i.pago),prev={};
+  for(const i of alvo){const pid=i.c.id+'__'+M,cur=local.pags[pid];prev[pid]=cur?clean(cur):null;
+    local.pags[pid]=voltar?{...cur,pago:false}:{...(cur||{}),contaId:i.c.id,mes:M,pago:true,pagoEm:TODAY,valor:i.valor}}
+  sairSel();const n=alvo.length;
+  if(await safe(()=>saveLocal()))toast(voltar?(n===1?'1 conta voltou':n+' contas voltaram')+' para “a pagar”':(n===1?'1 conta marcada como paga':n+' contas marcadas como pagas'),[{t:'Desfazer',fn:()=>{for(const[k,v]of Object.entries(prev)){if(v)local.pags[k]=v;else delete local.pags[k]}safe(()=>saveLocal())}}]);
+}
+async function selExcluir(){
+  const ids=[...(S.sel||[])].filter(id=>local.contas[id]);if(!ids.length){sairSel();render();return}
+  const bk={contas:{},pags:{}};
+  for(const id of ids){bk.contas[id]=local.contas[id];delete local.contas[id];for(const k of Object.keys(local.pags))if(k.startsWith(id+'__')){bk.pags[k]=local.pags[k];delete local.pags[k]}}
+  sairSel();
+  if(await safe(()=>saveLocal()))toast(ids.length===1?'1 conta excluída':ids.length+' contas excluídas',[{t:'Desfazer',fn:()=>{Object.assign(local.contas,bk.contas);Object.assign(local.pags,bk.pags);safe(()=>saveLocal())}}]);
+}
+
+/* ---------- modo claro / escuro ---------- */
+const icSol='<svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="4.2" fill="none" stroke="currentColor" stroke-width="2"/><path d="M12 2.5v2.2M12 19.3v2.2M2.5 12h2.2M19.3 12h2.2M5.3 5.3l1.6 1.6M17.1 17.1l1.6 1.6M5.3 18.7l1.6-1.6M17.1 6.9l1.6-1.6" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>';
+const icLua='<svg viewBox="0 0 24 24"><path d="M20 14.5A8 8 0 019.5 4a8 8 0 1010.5 10.5z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></svg>';
+function aplicaTema(t){
+  const r=document.documentElement;if(t==='claro')r.dataset.tema='claro';else delete r.dataset.tema;
+  const m=document.querySelector('meta[name=theme-color]');if(m)m.content=t==='claro'?'#f2f5f9':'#0a2540';
+  const b=$('#temaBtn');b.innerHTML=t==='claro'?icLua:icSol;b.setAttribute('aria-label',t==='claro'?'Mudar para modo escuro':'Mudar para modo claro');
+}
+$('#temaBtn').addEventListener('click',()=>{const t=document.documentElement.dataset.tema==='claro'?'escuro':'claro';try{localStorage.setItem('bolso-tema',t)}catch(e){}aplicaTema(t)});
+aplicaTema(document.documentElement.dataset.tema==='claro'?'claro':'escuro');
 
 /* ---------- backup ---------- */
 const icOk='<svg viewBox="0 0 24 24"><path d="M5 12.5l4.2 4.2L19 7" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg>';
@@ -804,15 +871,23 @@ $('#fileB').addEventListener('change',async e=>{
 });
 
 /* ---------- navegação ---------- */
-const goMes=M=>{S.M=M;$('#toast').hidden=true;render();window.scrollTo({top:0})};
+const goMes=M=>{S.M=M;sairSel();$('#toast').hidden=true;render();window.scrollTo({top:0})};
 $('#prev').addEventListener('click',()=>goMes(addM(S.M,-1)));
 $('#next').addEventListener('click',()=>goMes(addM(S.M,1)));
 $('#hoje').addEventListener('click',()=>goMes(CUR));
 $('#nova').addEventListener('click',()=>{if(S.loaded&&!S.err)openSheet(null)});
 $('#extra').addEventListener('click',()=>{S.filtro='sem';render();$('#chips').scrollIntoView({behavior:'smooth',block:'start'})});
 document.addEventListener('click',e=>{
-  const t=e.target.closest('[data-t],[data-o],[data-f],[data-close],[data-closev],[data-pick],[data-rmc],[data-v],[data-ent],[data-closee],[data-erm],[data-view],[data-per],[data-am],[data-abrir]');if(!t)return;
+  const t=e.target.closest('[data-t],[data-o],[data-f],[data-close],[data-closev],[data-pick],[data-rmc],[data-v],[data-ent],[data-closee],[data-erm],[data-view],[data-per],[data-am],[data-abrir],[data-s],[data-selon],[data-seloff],[data-selall],[data-selpag],[data-seldel],[data-selvoltar],[data-seldelok]');if(!t)return;
   const d=t.dataset;
+  if(d.s){if(S.sel){S.sel.has(d.s)?S.sel.delete(d.s):S.sel.add(d.s);S.selConf=false;render()}return}
+  if('selon' in d){S.sel=new Set();S.selConf=false;$('#toast').hidden=true;render();return}
+  if('seloff' in d){sairSel();render();return}
+  if('selall' in d){const v=visiveis(),tudo=v.length>0&&v.every(i=>S.sel.has(i.c.id));v.forEach(i=>tudo?S.sel.delete(i.c.id):S.sel.add(i.c.id));render();return}
+  if('selpag' in d){selPagar();return}
+  if('seldel' in d){if(!S.sel||!S.sel.size){toast('Toque nas contas para selecionar.');return}S.selConf=true;renderSelBar();return}
+  if('selvoltar' in d){S.selConf=false;renderSelBar();return}
+  if('seldelok' in d){selExcluir();return}
   if(d.t)toggle(d.t);
   else if(d.o)openSheet(d.o);
   else if(d.f){S.filtro=d.f;render()}
@@ -829,7 +904,7 @@ document.addEventListener('click',e=>{
   else if(d.abrir){S.M=d.abrir;setView('mes')}
   else if('erm' in d){t.closest('.erow').remove();if(!document.querySelector('#eRows .erow'))eRow('',null)}
 });
-document.addEventListener('keydown',e=>{if(e.key!=='Escape')return;if(!$('#viewer').hidden)$('#viewer').hidden=true;else if(!$('#sheetE').hidden)closeEnt();else if(!$('#sheet').hidden)closeSheet()});
+document.addEventListener('keydown',e=>{if(e.key!=='Escape')return;if(S.sel&&$('#sheet').hidden&&$('#sheetE').hidden){sairSel();render();return}if(!$('#viewer').hidden)$('#viewer').hidden=true;else if(!$('#sheetE').hidden)closeEnt();else if(!$('#sheet').hidden)closeSheet()});
 
 /* ---------- instalar e uso sem internet ---------- */
 let instEv=null;
